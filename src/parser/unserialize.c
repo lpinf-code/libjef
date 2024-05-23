@@ -6,6 +6,7 @@
 */
 
 #include "jef/json.h"
+#include "jef/parsing.h"
 
 /**
  * @brief Turns a JSON string into an entity.
@@ -15,5 +16,8 @@
  */
 json_entity_t *json_unserialize(const char *input)
 {
+    struct json_tokens tokens = { .cursor = input };
+
+    while (jef_tkn_next(&tokens));
     return NULL;
 }

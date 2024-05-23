@@ -10,7 +10,6 @@
 
 #include <stdbool.h>
 #include <stddef.h>
-#include <stdio.h>
 
 static double exponentiate(struct json_token *tok, double value, int i)
 {
@@ -24,7 +23,6 @@ static double exponentiate(struct json_token *tok, double value, int i)
             value = value / 10;
         else
             value = value * 10;
-    printf("- Got (exp) number %lf.\n", value);
     return value;
 }
 
@@ -46,7 +44,6 @@ double get_number(struct json_token *tok)
             value += flt * (tok->begin[i] - '0');
         }
     }
-    printf("NUMBER : %lf.\n", value);
     return value;
 }
 

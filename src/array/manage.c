@@ -7,7 +7,6 @@
 
 #include "jef/array.h"
 #include "jef/entity.h"
-#include <stdio.h>
 
 /**
  * @brief Create a new JSON array.
@@ -41,9 +40,7 @@ json_array_t *json_array_new(size_t size)
 */
 void json_array_destroy(json_array_t *array)
 {
-    printf("Destroying array %p of %d\n", array, array->length);
-    for (int i = 0; i < array->length; i++) {
-        printf("Destroying array item %d, %p\n", i, array->content[i]);
+    for (size_t i = 0; i < array->length; i++) {
         json_entity_destroy(array->content[i]);
     }
     free(array->content);
@@ -67,7 +64,6 @@ static int expand_region(json_array_t *array)
     size_t old_size = array->region_size;
     json_entity_t **old_content = array->content;
 
-    printf("Expanding array\n");
     array->region_size = array->length * 2;
     array->content = malloc(sizeof(json_entity_t *) * array->region_size);
     if (array->content == NULL) {
@@ -90,7 +86,6 @@ static int expand_region(json_array_t *array)
 */
 int json_array_push(json_array_t *array, json_entity_t *entity)
 {
-    printf("Inserting entity in array at %d\n", array->length);
     array->length++;
     if (array->length >= array->region_size)
         if (expand_region(array) == -1)

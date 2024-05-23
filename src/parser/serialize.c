@@ -17,5 +17,8 @@
  */
 ssize_t json_serialize(json_entity_t *entity, char **outptr, int indent)
 {
+    (void) (entity);
+    (void) (outptr);
+    (void) (indent);
     return -1;
 }

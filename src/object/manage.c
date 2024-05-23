@@ -7,7 +7,6 @@
 
 #include "jef/object.h"
 #include "jef/array.h"
-#include <stdio.h>
 #include <stdlib.h>
 
 /**
@@ -33,7 +32,6 @@ static void free_node(struct json_object_entry_s *entry)
         return;
     free_node(entry->less);
     free_node(entry->gteq);
-    printf("Freeing %d %s %ld\n", entry->value.type, entry->key, entry->hash);
     if (entry->value.type == JSON_STRING && entry->value.dynamic_value)
         free(entry->value.content.string);
     if (entry->value.type == JSON_OBJECT && entry->value.dynamic_value)
@@ -52,7 +50,6 @@ static void free_node(struct json_object_entry_s *entry)
 */
 void json_object_destroy(json_object_t *object)
 {
-    printf("Freeing OBJECT %p\n", object);
     free_node(object->root);
     free(object);
 }

@@ -6,7 +6,6 @@
 */
 
 #include <stddef.h>
-#include <stdio.h>
 
 #include "jef/parsing.h"
 #include "jef/array.h"
@@ -50,7 +49,6 @@ json_entity_t *jef_parson_array(struct json_tokens *tokens)
     json_entity_t *entity;
 
     tokens->current = tokens->current->next;
-    printf("ARRAY.\n");
     if (tokens->current == NULL)
         return NULL;
     entity = json_entity_new();
@@ -62,7 +60,6 @@ json_entity_t *jef_parson_array(struct json_tokens *tokens)
         return NULL;
     }
     if (parse_array(entity, tokens)) {
-        printf("ARRAY : %p of %d.\n", entity, entity->content.array->length);
         return entity;
     } else
         json_entity_destroy(entity);

@@ -6,7 +6,6 @@
 */
 
 #include <stddef.h>
-#include <stdio.h>
 #include <stdlib.h>
 
 #include "jef/parsing.h"
@@ -20,15 +19,12 @@ json_entity_t *jef_parson_static(struct json_tokens *tokens)
         return NULL;
     switch (tokens->current->type) {
         case JSON_TK_NULL:
-            printf("STATIC: null.\n");
             break;
         case JSON_TK_TRUE:
-            printf("STATIC: true.\n");
             json_entity_set_boolean(entity, true);
             break;
         case JSON_TK_FALSE:
             json_entity_set_boolean(entity, false);
-            printf("STATIC: false.\n");
             break;
         default:
             return NULL;
@@ -85,7 +81,6 @@ json_entity_t *jef_parson_string(struct json_tokens *tokens)
     if (ent->content.string == NULL)
         return NULL;
     run_str_loop(ent, tokens);
-    printf("STRING: %s.\n", ent->content.string);
     tokens->current = tokens->current->next;
     return ent;
 }

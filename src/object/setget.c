@@ -8,7 +8,6 @@
 #include "jef/entity.h"
 #include "jef/object.h"
 #include <stdbool.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
 
@@ -34,7 +33,6 @@ static void push(
 {
     if ((*parent) == NULL) {
         *parent = entry;
-        printf("Inserted '%s' %ld\n", entry->key, entry->hash);
         return;
     }
     if ((*parent)->key > entry->key)

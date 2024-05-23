@@ -7,7 +7,6 @@
 
 #include "jef/parsing.h"
 #include <stdbool.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -15,22 +14,6 @@ const char *const KEYWORDS[] = {
     "null",
     "true",
     "false"
-};
-
-const char *const DEBUG_TOKEN_NAMES[] = {
-    [JSON_TK_OBJ_START] = "OBJ_START",
-    [JSON_TK_OBJ_END] = "OBJ_END",
-    [JSON_TK_ARR_START] = "ARR_START",
-    [JSON_TK_ARR_END] = "ARR_END",
-    [JSON_TK_STRING] = "STRING",
-    [JSON_TK_NUMBER] = "NUMBER",
-    [JSON_TK_INTEGER] = "INTEGER",
-    [JSON_TK_NULL] = "NULL",
-    [JSON_TK_TRUE] = "TRUE",
-    [JSON_TK_FALSE] = "FALSE",
-    [JSON_TK_SEP] = "SEP",
-    [JSON_TK_KV] = "KV",
-    [JSON_INVALID] = "[Illegal token]"
 };
 
 int jef_tkn_isin(char c, const char *str)

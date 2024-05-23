@@ -28,6 +28,5 @@ json_entity_t *json_unserialize(const char *input)
         tokens.current = tokens.start->next;
         free(tokens.start);
     }
-    printf("PARSING DONE\n");
     return entity;
 }

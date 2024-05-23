@@ -19,6 +19,5 @@ int main(void)
         "}\n"
     );
 
-    printf("Parsing : \n%s\n", test_string);
     json_entity_destroy(json_unserialize(test_string));
 }

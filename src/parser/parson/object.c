@@ -6,7 +6,6 @@
 */
 
 #include <stddef.h>
-#include <stdio.h>
 #include <stdlib.h>
 
 #include "jef/parsing.h"
@@ -59,7 +58,6 @@ static int run_object_parser(json_entity_t *entity, struct json_tokens *tokens)
     if (tokens->current->type != JSON_TK_STRING)
         return -1;
     str = jef_parson_string(tokens);
-    printf(" - is key of :\n");
     if (str == NULL)
         return -1;
     key = str->content.string;
@@ -85,7 +83,6 @@ json_entity_t *jef_parson_object(struct json_tokens *tokens)
 {
     json_entity_t *entity;
 
-    printf("OBJECT.\n");
     tokens->current = tokens->current->next;
     if (tokens->current == NULL)
         return NULL;
@@ -98,10 +95,8 @@ json_entity_t *jef_parson_object(struct json_tokens *tokens)
         return NULL;
     }
     if (parse_object(entity, tokens)) {
-        printf("OBJECT : %p.\n", entity);
         return entity;
     } else {
-        printf("OBJECT : Failure.\n");
         json_entity_destroy(entity);
     }
     return NULL;

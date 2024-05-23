@@ -8,7 +8,6 @@
 #include "jef/entity.h"
 #include "jef/object.h"
 #include "jef/array.h"
-#include <stdio.h>
 #include <stdlib.h>
 
 /**

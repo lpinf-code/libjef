@@ -22,7 +22,7 @@ int json_entity_set_integer(json_entity_t *entity, int64_t integer)
         return -1;
     if (entity->dynamic_value && entity->type == JSON_STRING)
         free(entity->content.string);
-    entity->type = JSON_BOOLEAN;
+    entity->type = JSON_INTEGER;
     entity->content.integer = integer;
     entity->dynamic_value = false;
     return 0;
@@ -42,7 +42,7 @@ int json_entity_set_number(json_entity_t *entity, double number)
         return -1;
     if (entity->dynamic_value && entity->type == JSON_STRING)
         free(entity->content.string);
-    entity->type = JSON_BOOLEAN;
+    entity->type = JSON_NUMBER;
     entity->content.number = number;
     entity->dynamic_value = false;
     return 0;

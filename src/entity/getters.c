@@ -22,7 +22,6 @@
 int json_entity_get(json_entity_t *entity, enum json_type type, void *vptr)
 {
     if (type != entity->type
-        && !(type == JSON_NUMBER && entity->type == JSON_INTEGER)
         && !(type == JSON_STRING && entity->type == JSON_NULL)
     )
         return -1;

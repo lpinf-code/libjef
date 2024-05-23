@@ -7,12 +7,30 @@
 
 #include "jef/parsing.h"
 #include <stdbool.h>
+#include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 const char *const KEYWORDS[] = {
     "null",
     "true",
     "false"
+};
+
+const char *const DEBUG_TOKEN_NAMES[] = {
+    [JSON_TK_OBJ_START] = "OBJ_START",
+    [JSON_TK_OBJ_END] = "OBJ_END",
+    [JSON_TK_ARR_START] = "ARR_START",
+    [JSON_TK_ARR_END] = "ARR_END",
+    [JSON_TK_STRING] = "STRING",
+    [JSON_TK_NUMBER] = "NUMBER",
+    [JSON_TK_INTEGER] = "INTEGER",
+    [JSON_TK_NULL] = "NULL",
+    [JSON_TK_TRUE] = "TRUE",
+    [JSON_TK_FALSE] = "FALSE",
+    [JSON_TK_SEP] = "SEP",
+    [JSON_TK_KV] = "KV",
+    [JSON_INVALID] = "[Illegal token]"
 };
 
 int jef_tkn_isin(char c, const char *str)
@@ -27,16 +45,21 @@ static int iseq(const char *s1, const char *s2)
 {
     int i = 0;
 
-    for (i = 0; s1[i] != '\0'; i++)
+    for (i = 0; s2[i] != '\0'; i++)
         if (s1[i] != s2[i])
             return 0;
-    return s1[i] == s2[i] ? i : 0;
+    return jef_tkn_isin(s1[i], JEF_IDENTIFYER) >= 0 ? 0 : i;
 }
 
 static void push_token(struct json_tokens *tokens, struct json_token *tok)
 {
-    tokens->end->next = tok;
-    tokens->end = tok;
+    if (tokens->start == NULL) {
+        tokens->start = tok;
+        tokens->end = tok;
+    } else {
+        tokens->end->next = tok;
+        tokens->end = tok;
+    }
 }
 
 static int get_string(struct json_tokens *tokens, struct json_token *tok)
@@ -56,9 +79,9 @@ static int get_string(struct json_tokens *tokens, struct json_token *tok)
             index = -1;
         escape = (tokens->cursor[i] == '\\');
     }
-    if (index >= 0)
-        tokens->errors++;
-    tok->size = i;
+    tokens->errors += (index >= 0);
+    tok->size = i - 2;
+    tok->begin++;
     tokens->cursor += i;
     return 1;
 }
@@ -70,29 +93,38 @@ static int get_static(struct json_tokens *tokens, struct json_token *tok)
 
     if (index == -1)
         return 0;
-    tok->type = index ? JSON_TK_BOOL : JSON_TK_NULL;
     len = iseq(tokens->cursor, KEYWORDS[index]);
     if (len) {
-        tok->size += len;
+        tok->type = JSON_TK_NULL + index;
+        tok->size += len - 1;
+        tokens->cursor += len;
         return 1;
     }
     return 0;
 }
 
+static int get_uniq(struct json_tokens *tokens, struct json_token *tok)
+{
+    if (tokens->cursor[0] == '{')
+        tok->type = JSON_TK_OBJ_START;
+    if (tokens->cursor[0] == '}')
+        tok->type = JSON_TK_OBJ_END;
+    if (tokens->cursor[0] == '[')
+        tok->type = JSON_TK_ARR_START;
+    if (tokens->cursor[0] == ']')
+        tok->type = JSON_TK_ARR_END;
+    if (tokens->cursor[0] == ',')
+        tok->type = JSON_TK_SEP;
+    if (tokens->cursor[0] == ':')
+        tok->type = JSON_TK_KV;
+    tokens->cursor++;
+    return 1;
+}
+
 static int get_token(struct json_tokens *tokens, struct json_token *tok)
 {
-    if (jef_tkn_isin(tokens->cursor[0], "{}[],") >= 0) {
-        tok->type = JSON_TK_ARR_END;
-        if (tokens->cursor[0] == '{')
-            tok->type = JSON_TK_OBJ_START;
-        if (tokens->cursor[0] == '}')
-            tok->type = JSON_TK_OBJ_END;
-        if (tokens->cursor[0] == '[')
-            tok->type = JSON_TK_ARR_START;
-        if (tokens->cursor[0] == ',')
-            tok->type = JSON_TK_SEP;
-        tokens->cursor++;
-        return 1;
+    if (jef_tkn_isin(tokens->cursor[0], "{}[],:") >= 0) {
+        return get_uniq(tokens, tok);
     }
     if (get_string(tokens, tok)) {
         tok->type = JSON_TK_STRING;
@@ -112,14 +144,15 @@ int jef_tkn_next(struct json_tokens *tokens)
     if (tokens->cursor[0] == '\0')
         return 0;
     tok = malloc(sizeof(struct json_token));
+    tok->next = NULL;
     if (tok == NULL) {
         tokens->errors = -1;
         return -1;
     }
-    tok->type = -1;
+    tok->type = JSON_INVALID;
     tok->size = 1;
     tok->begin = tokens->cursor;
     res = get_token(tokens, tok);
     push_token(tokens, tok);
-    return tokens->errors || tok->type == -1 ? -1 : res;
+    return tokens->errors || tok->type == JSON_INVALID ? -1 : res;
 }

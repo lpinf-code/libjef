@@ -22,7 +22,7 @@ int json_entity_set_object(json_entity_t *entity, json_object_t *object)
         return -1;
     if (entity->dynamic_value && entity->type == JSON_STRING)
         free(entity->content.string);
-    entity->type = JSON_BOOLEAN;
+    entity->type = JSON_OBJECT;
     entity->content.object = object;
     entity->dynamic_value = true;
     return 0;
@@ -42,7 +42,7 @@ int json_entity_set_array(json_entity_t *entity, json_array_t *array)
         return -1;
     if (entity->dynamic_value && entity->type == JSON_STRING)
         free(entity->content.string);
-    entity->type = JSON_BOOLEAN;
+    entity->type = JSON_ARRAY;
     entity->content.array = array;
     entity->dynamic_value = true;
     return 0;
@@ -63,7 +63,7 @@ int json_entity_set_string(json_entity_t *entity, char *string, bool freeable)
         return -1;
     if (entity->dynamic_value && entity->type == JSON_STRING)
         free(entity->content.string);
-    entity->type = JSON_BOOLEAN;
+    entity->type = JSON_STRING;
     entity->content.string = string;
     entity->dynamic_value = freeable;
     return 0;

@@ -6,6 +6,9 @@
 */
 
 #include "jef/entity.h"
+#include "jef/object.h"
+#include "jef/array.h"
+#include <stdio.h>
 #include <stdlib.h>
 
 /**
@@ -50,5 +53,13 @@ void json_entity_init(json_entity_t *entity)
 */
 void json_entity_destroy(json_entity_t *entity)
 {
+    if (entity == NULL)
+        return;
+    if (entity->type == JSON_STRING && entity->dynamic_value)
+        free(entity->content.string);
+    if (entity->type == JSON_OBJECT && entity->dynamic_value)
+        json_object_destroy(entity->content.object);
+    if (entity->type == JSON_ARRAY && entity->dynamic_value)
+        json_array_destroy(entity->content.array);
     free(entity);
 }

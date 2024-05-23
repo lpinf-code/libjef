@@ -8,6 +8,7 @@
 #include "jef/entity.h"
 #include "jef/object.h"
 #include <stdbool.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
 
@@ -33,6 +34,7 @@ static void push(
 {
     if ((*parent) == NULL) {
         *parent = entry;
+        printf("Inserted '%s' %ld\n", entry->key, entry->hash);
         return;
     }
     if ((*parent)->key > entry->key)
@@ -65,6 +67,9 @@ void json_object_push(
     entry->less = NULL;
     entry->hash = hash(key);
     json_entity_init(&entry->value);
+    entry->value.type = entity->type;
+    entry->value.dynamic_value = entity->dynamic_value;
+    entry->value.content = entity->content;
     entry->value.dynamic_key = free_key;
     push(&object->root, entry);
 }

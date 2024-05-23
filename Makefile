@@ -23,6 +23,11 @@ clean:
 fclean:
 	rm -f $(NAME)
 
+main_test: CFLAGS += -g3
+main_test: $(NAME)
+	gcc -o tests/module_tests debug/*.c -Iinclude -L. -ljef
+	chmod a+x tests/module_tests
+
 re: fclean all
 
 tests_clean:
@@ -31,6 +36,7 @@ tests_clean:
 
 tests_fclean: tests_clean
 	rm -f tests/module_tests
+
 
 unit_tests: tests_fclean $(NAME)
 	gcc -o tests/module_tests tests/*.c -Iinclude \

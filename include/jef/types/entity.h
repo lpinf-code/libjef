@@ -58,22 +58,17 @@ union json_entity_content {
      * Thus, when parsing an number with no decimal
      * point/exponent, we assume it to be a `BigInt`
      * (aka 64-bit signed integer value).
-     *
-     * @note To fetch the JS `Number` equivalent, instead fetch
-     *       `json_entity_content::number` which will always be set
-     *       when `JSON_INTEGER` is set.
     */
     uint64_t integer; // Automatically inferred from source
 
     /**
-     * @brief The value when the type is `JSON_NUMBER` or `JSON_INTEGER`
+     * @brief The value when the type is `JSON_NUMBER`
      *
      * In JS, all numbers are double precision floating point
      * numbers.
      *
-     * Staying true to JS, this value is set for all number types,
-     * which means even if the value is a fixed `JSON_INTEGER`,
-     * this value is set.
+     * In C, only explicit floating point numbers are
+     * considered as such.
     */
     double number;    // file !
 

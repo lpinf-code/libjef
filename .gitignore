@@ -1,0 +1,23 @@
+# Ignore temporary files
+**/\#*\#
+**/*~
+**/~*
+
+# Ignore main build artifacts / binaries
+**/*.o
+*.a
+
+# Ignore core dumps
+vgcore*
+
+# Ignore test build artifacts / binaries
+tests/*.o
+tests/module_tests
+tests/*.g*
+
+# Ignore lib binaries
+**/*.a
+
+# Some ide/lsp-specific junk
+.vscode/
+compile_flags.txt

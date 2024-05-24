@@ -35,7 +35,7 @@ static void push(
         *parent = entry;
         return;
     }
-    if ((*parent)->key > entry->key)
+    if (entry->hash < (*parent)->hash)
         push(&(*parent)->less, entry);
     else
         push(&(*parent)->gteq, entry);
@@ -102,7 +102,7 @@ json_entity_t *json_object_get(json_object_t *object, const char *key)
             return NULL;
         if (entry->hash == hashed_key && equal(entry->key, key))
             break;
-        if (entry->hash > hashed_key)
+        if (hashed_key < entry->hash)
             entry = entry->less;
         else
             entry = entry->gteq;

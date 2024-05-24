@@ -7,6 +7,7 @@
 
 #include "jef/json.h"
 #include "jef/parsing.h"
+#include <stdio.h>
 #include <stdlib.h>
 
 /**
@@ -22,6 +23,8 @@ json_entity_t *json_unserialize(const char *input)
 
     while (jef_tkn_next(&tokens) > 0);
     tokens.current = tokens.start;
+    if (tokens.errors)
+        return NULL;
     entity = jef_parse_entity(&tokens);
     tokens.current = tokens.start;
     for (; tokens.current != NULL; tokens.start = tokens.current) {

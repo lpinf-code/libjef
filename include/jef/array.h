@@ -5,6 +5,11 @@
 ** include/jef/array.h
 */
 
+/**
+ * @file
+ * @brief JSON array manipulation functions.
+*/
+
 #include "types/array.h"
 #include <stdlib.h>
 

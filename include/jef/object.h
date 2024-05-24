@@ -57,4 +57,15 @@ void json_object_push(
 */
 json_entity_t *json_object_get(json_object_t *object, const char *key);
 
+/**
+ * @brief Runs a function for each pair in the object.
+ *
+ * @param object The object to look into.
+ * @param loopfn The function to run.
+*/
+void json_object_forpairs(
+    json_object_t *object,
+    void (*loopfn)(const char *key, json_entity_t *value)
+);
+
 #endif // !JEF_OBJECT_H

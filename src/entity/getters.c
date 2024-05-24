@@ -5,6 +5,8 @@
 ** src/entity/getters.c
 */
 
+#include <stddef.h>
+
 #include "jef/entity.h"
 
 /**
@@ -21,9 +23,8 @@
 */
 int json_entity_get(json_entity_t *entity, enum json_type type, void *vptr)
 {
-    if (type != entity->type
-        && !(type == JSON_STRING && entity->type == JSON_NULL)
-    )
+    if (entity == NULL || (type != entity->type
+        && !(type == JSON_STRING && entity->type == JSON_NULL)))
         return -1;
     if (type == JSON_STRING)
         (*(char **)vptr) = entity->content.string;
@@ -38,4 +39,49 @@ int json_entity_get(json_entity_t *entity, enum json_type type, void *vptr)
     if (type == JSON_ARRAY)
         (*(json_array_t **)vptr) = entity->content.array;
     return 0;
+}
+
+/**
+ * @brief Getter for an entity object.
+ *
+ * Allows retrieval of the entity object, if it contains one.
+ *
+ * @param entity The entity to read.
+ * @returns The value on success, NULL on error.
+*/
+json_object_t *json_entity_get_object(json_entity_t *entity)
+{
+    if (entity == NULL || entity->type != JSON_OBJECT)
+        return NULL;
+    return entity->content.object;
+}
+
+/**
+ * @brief Getter for an entity array.
+ *
+ * Allows retrieval of the entity array, if it contains one.
+ *
+ * @param entity The entity to read.
+ * @returns The value on success, NULL on error.
+*/
+json_array_t *json_entity_get_array(json_entity_t *entity)
+{
+    if (entity == NULL || entity->type != JSON_ARRAY)
+        return NULL;
+    return entity->content.array;
+}
+
+/**
+ * @brief Getter for an entity string.
+ *
+ * Allows retrieval of the entity string, if it contains one.
+ *
+ * @param entity The entity to read.
+ * @returns The value on success, NULL on error.
+*/
+char *json_entity_get_string(json_entity_t *entity)
+{
+    if (entity == NULL || entity->type != JSON_STRING)
+        return NULL;
+    return entity->content.string;
 }

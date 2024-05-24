@@ -56,7 +56,7 @@ void json_array_destroy(json_array_t *array)
 */
 json_entity_t *json_array_at(json_array_t *array, size_t index)
 {
-    return index < array->length ? NULL : array->content[index];
+    return index >= array->length ? NULL : array->content[index];
 }
 
 static int expand_region(json_array_t *array)

@@ -10,6 +10,8 @@
  * @brief JSON entity manipulation functions.
 */
 
+#include <stddef.h>
+
 #include "types/defs.h"
 #include "types/entity.h"
 
@@ -58,6 +60,69 @@ void json_entity_destroy(json_entity_t *entity);
  * @returns 0 on success, -1 on error.
 */
 int json_entity_get(json_entity_t *entity, enum json_type type, void *vptr);
+
+/**
+ * @brief Getter for an entity object.
+ *
+ * Allows retrieval of the entity object, if it contains one.
+ *
+ * @param entity The entity to read.
+ * @returns The value on success, NULL on error.
+*/
+json_object_t *json_entity_get_object(json_entity_t *entity);
+
+/**
+ * @brief Getter for an entity array.
+ *
+ * Allows retrieval of the entity array, if it contains one.
+ *
+ * @param entity The entity to read.
+ * @returns The value on success, NULL on error.
+*/
+json_array_t *json_entity_get_array(json_entity_t *entity);
+
+/**
+ * @brief Getter for an entity string.
+ *
+ * Allows retrieval of the entity string, if it contains one.
+ *
+ * @param entity The entity to read.
+ * @returns The value on success, NULL on error.
+*/
+char *json_entity_get_string(json_entity_t *entity);
+
+/**
+ * @brief Getter for an entity number.
+ *
+ * Allows retrieval of the entity number, if it contains one.
+ *
+ * @param entity The entity to read.
+ * @returns The value on success, 0 on error.
+ *          Check for entity type separately.
+*/
+double json_entity_get_number(json_entity_t *entity);
+
+/**
+ * @brief Getter for an entity integer.
+ *
+ * Allows retrieval of the entity integer, if it contains one.
+ *
+ * @param entity The entity to read.
+ * @returns The value on success, 0 on error.
+ *          Check for entity type separately.
+*/
+uint64_t json_entity_get_integer(json_entity_t *entity);
+
+/**
+ * @brief Getter for an entity boolean.
+ *
+ * Allows retrieval of the entity boolean, if it contains one.
+ *
+ * @param entity The entity to read.
+ * @returns The value on success, false on error.
+ *          Check for entity type separately.
+*/
+bool json_entity_get_boolean(json_entity_t *entity);
 
 /**
  * @brief Setter for an entity object.
@@ -128,5 +193,23 @@ int json_entity_set_boolean(json_entity_t *entity, bool boolean);
  * @param entity The entity to set.
 */
 int json_entity_set_null(json_entity_t *entity);
+
+/**
+ * @brief Retrieves an entity at a key in an entity object.
+ *
+ * @param entobj The entity with an object to look into.
+ * @param key The key to retrieve from.
+ * @returns The entity, or NULL if not found (and for errors).
+*/
+json_entity_t *json_entobj_get(json_entity_t *entobj, const char *key);
+
+/**
+ * @brief Retrieves an entity at an index in an entity array.
+ *
+ * @param entobj The entity with an array to look into.
+ * @param index The index to retrieve from.
+ * @returns The entity, or NULL if not found (and for errors).
+*/
+json_entity_t *json_entarr_get(json_entity_t *entarr, size_t index);
 
 #endif // !JEF_ENTITY_H

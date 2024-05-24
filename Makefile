@@ -25,6 +25,7 @@ fclean:
 
 main_test: CFLAGS += -g3
 main_test: $(NAME)
+	@make clean
 	gcc -o tests/module_tests debug/*.c -Iinclude -L. -ljef -g3
 	chmod a+x tests/module_tests
 

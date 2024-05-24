@@ -6,6 +6,7 @@
 # Ignore main build artifacts / binaries
 **/*.o
 *.a
+a.out
 
 # Ignore core dumps
 vgcore*
@@ -13,11 +14,17 @@ vgcore*
 # Ignore test build artifacts / binaries
 tests/*.o
 tests/module_tests
-tests/*.g*
+**/*.gc*
 
 # Ignore lib binaries
 **/*.a
 
+# Ignore generated docs
+docs/html/
+
 # Some ide/lsp-specific junk
 .vscode/
 compile_flags.txt
+
+# Doxygen stuff
+Doxyfile.bak

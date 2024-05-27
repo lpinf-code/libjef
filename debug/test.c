@@ -27,26 +27,23 @@ static char *readfile(const char *path)
     return fcontent;
 }
 
-bool *get_tile_collisions(void)
+int main(void)
 {
     char *fcontent = readfile("test.json");
     json_entity_t *data = json_unserialize(fcontent);
     json_entity_t *tiles = json_entobj_get(data, "tiles");
     json_array_t *tilearray = json_entity_get_array(tiles);
     json_entity_t *tmp;
-    bool *collisions = NULL;
 
     if (tilearray == NULL)
         return NULL;
-    collisions = calloc(tilearray->length, sizeof(bool));
     for (size_t i = 0; i < tilearray->length; i++) {
         tmp = tilearray->content[i];
         tmp = json_entobj_get(tmp, "properties");
         tmp = json_entarr_get(tmp, 0);
         tmp = json_entobj_get(tmp, "value");
-        collisions[i] = json_entity_get_boolean(tmp);
+        printf("Tile %ld is solid ? %d.\n", i, json_entity_get_boolean(tmp));
     }
     json_entity_destroy(data);
     free(fcontent);
-    return collisions;
 }

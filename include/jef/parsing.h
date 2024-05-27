@@ -5,6 +5,14 @@
 ** include/jef/parsing.h
 */
 
+/**
+ * @file
+ * @brief Internal parsing definitions.
+ * @warning Should not be included. To parse JSON,
+ *          use `json.h`
+ * @cond INTERNAL
+*/
+
 #include "jef/types/defs.h"
 
 #ifndef JEF_PARSING_H
@@ -59,5 +67,9 @@ json_entity_t *jef_parson_array(struct json_tokens *tokens);
 json_entity_t *jef_parson_static(struct json_tokens *tokens);
 json_entity_t *jef_parson_number(struct json_tokens *tokens);
 json_entity_t *jef_parson_string(struct json_tokens *tokens);
+
+/**
+ * @endcond
+*/
 
 #endif // !JEF_PARSING_H

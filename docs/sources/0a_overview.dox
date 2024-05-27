@@ -1,0 +1,19 @@
+/**
+@mainpage Overview
+
+Welcome to the documentation of libJEF, a C JSON
+parser and serializer.
+
+@tableofcontents
+
+@section license License of libJEF
+
+@copyright &copy; 2023-2024 lpinf
+
+@par License
+    libJEF is released under the **MIT license**.
+
+For more details, look into the `LICENSE` file provided
+in the root of libJEF's repository.
+
+*/

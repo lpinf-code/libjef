@@ -6,7 +6,7 @@
 */
 
 #include "jef/json.h"
-#include "jef/parsing.h"
+#include "jef/internal/parsing.h"
 #include <stdio.h>
 #include <stdlib.h>
 

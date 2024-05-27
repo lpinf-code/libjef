@@ -5,7 +5,7 @@
 ** src/parser/tokenizer.c
 */
 
-#include "jef/parsing.h"
+#include "jef/internal/parsing.h"
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>

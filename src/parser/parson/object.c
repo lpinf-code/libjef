@@ -8,7 +8,7 @@
 #include <stddef.h>
 #include <stdlib.h>
 
-#include "jef/parsing.h"
+#include "jef/internal/parsing.h"
 #include "jef/object.h"
 #include "jef/entity.h"
 

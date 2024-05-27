@@ -8,7 +8,7 @@
 #include <stddef.h>
 #include <stdlib.h>
 
-#include "jef/parsing.h"
+#include "jef/internal/parsing.h"
 #include "jef/entity.h"
 
 json_entity_t *jef_parson_static(struct json_tokens *tokens)

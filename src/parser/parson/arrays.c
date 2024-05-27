@@ -7,7 +7,7 @@
 
 #include <stddef.h>
 
-#include "jef/parsing.h"
+#include "jef/internal/parsing.h"
 #include "jef/array.h"
 #include "jef/entity.h"
 

@@ -5,7 +5,7 @@
 ** src/parser/parson/numbers.c
 */
 
-#include "jef/parsing.h"
+#include "jef/internal/parsing.h"
 #include "jef/entity.h"
 
 #include <stdbool.h>

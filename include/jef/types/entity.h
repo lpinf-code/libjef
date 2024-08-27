@@ -59,7 +59,7 @@ union json_entity_content {
      * point/exponent, we assume it to be a `BigInt`
      * (aka 64-bit signed integer value).
     */
-    uint64_t integer; // Automatically inferred from source
+    int64_t integer; // Automatically inferred from source
 
     /**
      * @brief The value when the type is `JSON_NUMBER`
